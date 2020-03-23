@@ -1,9 +1,0 @@
-<application>
-  <component name="FindSettings">
-    <option name="customScope" value="Project 'SourceDBMethods'" />
-    <option name="defaultScopeName" value="Project 'SourceDBMethods'" />
-    <option name="localWholeWordsOnly" value="true" />
-    <option name="LOCAL_WHOLE_WORDS_ONLY" value="true" />
-    <option name="SEARCH_SCOPE" value="Project 'SourceDBMethods'" />
-  </component>
-</application>
