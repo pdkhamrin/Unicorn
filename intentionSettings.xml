@@ -1,0 +1,6 @@
+<application>
+  <component name="IntentionManagerSettings">
+    <ignoreAction name="Python/Convert triple-quoted string to single-quoted string" />
+    <ignoreAction name="Language injection/Inject language or reference" />
+  </component>
+</application>
