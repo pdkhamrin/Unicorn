@@ -16,3 +16,5 @@ class Metadata:
                              password=password, host=server)
     cnct.autocommit = True
     crsr = cnct.cursor()
+
+
