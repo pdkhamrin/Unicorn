@@ -9,7 +9,7 @@ import json
 #Подключения к источнику
 class SourceConnection:
 
- #Все свойства подключения к источнику
+ #Все свойства подключения к источнику (API)
  @staticmethod
  def GetSourceParams(input=None):
      #input имеет следующий вид:
@@ -55,7 +55,6 @@ class SourceConnection:
 
     return result
 
- #проверка подключения к источнику
  @staticmethod
  def SourceConnectionCheck(server,database,user,password,port):
 
@@ -74,6 +73,8 @@ class SourceConnection:
      else: result = 1
 
      return result
+
+ #проверка подключения к источнику (API)
  @staticmethod
  def GetSourceConnectionCheck(input):
      #input имеет следующий вид:
@@ -213,7 +214,7 @@ class SourceConnection:
 
 
 
- #редактирование подключения к источнику
+ #редактирование подключения к источнику (API)
  @staticmethod
  def SetSourceEdit(input):
      #params имеет следующий вид:
@@ -255,3 +256,36 @@ class SourceConnection:
              return SourceConnection.SourceAlter(source_id,source_type, source_name, server_name, database, user, password, port_number)
          if change_type=="3":
              return SourceConnection.SourceDelete(source_id)
+
+ @staticmethod
+ def SourceConnect(source_id):
+
+     source_attr_qr = SQLScript.SQLScript.SourceAttr(source_id)
+     Metadata.Metadata.crsr.execute(source_attr_qr)
+     source_attr = Metadata.Metadata.crsr.fetchall()
+
+     for attr in source_attr:
+         if attr[1]=="server_name":
+             server_name=attr[2]
+         if attr[1]=="database":
+             database=attr[2]
+         if attr[1]=="user":
+             user=attr[2]
+         if attr[1]=="password":
+             password=attr[2]
+         if attr[1]=="port_number":
+             port_number=attr[2]
+
+     cnct = pyodbc.connect(
+             server=server_name,
+             database=database,
+             uid=user,
+             tds_version='7.3',
+             pwd=password,
+             port=port_number,
+             driver='/usr/local/lib/libtdsodbc.so'
+     )
+
+     crsr = cnct.cursor()
+
+     return crsr
