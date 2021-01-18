@@ -2,7 +2,7 @@ import pyodbc
 import sys
 import datetime
 import json
-
+import SourceConnection
 #SQL скрипты
 class SQLScript:
 
@@ -91,4 +91,52 @@ class SQLScript:
 
         script = "update metadata.source set disable_flg='1' where source_id="+str(source_id)+";"
         return script
+
+    @staticmethod
+    def ListSourceObject(database=None, schema=None, table=None):
+
+        select = "select " \
+                 "tab.table_catalog, " \
+                 "tab.table_schema, " \
+                 "tab.table_name, " \
+                 "tab.table_type, " \
+                 "col.column_name, " \
+                 "col.data_type, " \
+                 "col.character_maximum_length, " \
+                 "col.numeric_precision, " \
+                 "col.numeric_scale, " \
+                 "case when ky.constraint_name is not null then 1 else 0 end " \
+                 "from information_schema.tables tab " \
+                 "left join information_schema.columns col " \
+                 "on 1=1 " \
+                 "and tab.table_catalog=col.table_catalog " \
+                 "and tab.table_schema=col.table_schema " \
+                 "and tab.table_name=col.table_name " \
+                 "left join information_schema.key_column_usage ky " \
+                 "on 1=1 " \
+                 "and tab.table_catalog=ky.table_catalog " \
+                 "and tab.table_schema=ky.table_schema " \
+                 "and tab.table_name=ky.table_name " \
+                 "and col.column_name=ky.column_name " \
+                 "and substring(ky.constraint_name,1,2)='PK'"
+        filter = " where 1=1"
+        if database is not None:
+            filter = filter + " and tab.table_catalog='"+database+"'"
+        if schema is not None:
+            filter = filter + " and tab.table_schema='"+schema+"'"
+        if table is not None:
+            filter = filter + " and tab.table_name='"+table+"'"
+
+        script = select + filter + ";"
+
+        return script
+
+    @staticmethod
+    def TableRaw(source_id, database, schema, table):
+
+        script = "select top 10 * from "+database+"."+schema+"."+table
+
+        return script
+
+
 
