@@ -140,17 +140,3 @@ class SourceObject:
         return result
 
 
-
-
-
-
-
-print(SourceObject.GetTableRaw("""
-    {"input":[
-    {"source_id":"1",
-       "database":"AdventureWorks2019",
-       "schema":"HumanResources",
-      "table":"EmployeePayHistory"
-    }]}"""
-))
-
