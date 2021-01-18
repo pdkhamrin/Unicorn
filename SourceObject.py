@@ -23,11 +23,17 @@ class SourceObject:
         #Если database, schema, table не заполнены, будут выведены все базы данных со всеми объектами источника
         #Можно указывать только одно значение атрибута
 
+        error = []
+
+        if input == None:
+            error.clear()
+            error.append({"error_flg":1,"error_code":"000020","error_text":"Not enough parameters"})
+
         input = json.loads(input)
-        source_id=input["input"][0]["source_id"]
-        database=input["input"][0]["database"]
-        schema=input["input"][0]["schema"]
-        table=input["input"][0]["table"]
+        source_id=input["input"][0].get(["source_id"],None)
+        database=input["input"][0].get(["database"],None)
+        schema=input["input"][0].get(["schema"],None)
+        table=input["input"][0].get(["table"],None)
 
         select_qr = SQLScript.SQLScript.ListSourceObject(database, schema, table)
 
@@ -77,7 +83,7 @@ class SourceObject:
                                         tbls["attributes"]=attributes_list
             attributes.append(obj[0]+"&"+obj[1]+obj[2]+"&"+obj[4])
 
-        result.update({"result":objects})
+        result.update({"result":[{"objects":objects, "errors":error}]})
 
         result = json.dumps(result)
 
@@ -99,10 +105,10 @@ class SourceObject:
         error = []
 
         input = json.loads(input)
-        source_id=input["input"][0]["source_id"]
-        database=input["input"][0]["database"]
-        schema=input["input"][0]["schema"]
-        table=input["input"][0]["table"]
+        source_id=input["input"][0].get(["source_id"],None)
+        database=input["input"][0].get(["database"],None)
+        schema=input["input"][0].get(["schema"],None)
+        table=input["input"][0].get(["table"],None)
 
         if source_id is None or database is None or schema is None or table is None:
             error.clear()
