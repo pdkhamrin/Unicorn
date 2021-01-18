@@ -30,3 +30,13 @@ CREATE TABLE metadata.source_attr (
 	attr_type varchar(100) NULL,
 	attr_value varchar(1000) NULL
 );
+
+
+create table metadata.data_type_mapping
+(
+	source_type varchar(50),
+	source_data_type varchar(50),
+	source_data_type_length integer, 
+	anchor_data_type varchar(50),
+	anchor_data_type_length integer
+);
