@@ -30,7 +30,7 @@ class SourceConnection:
         disable_flg=None
 
     source_qr = SQLScript.SQLScript.SourceId(source_id=source_id,disable_flg=disable_flg)
-    source_attr_qr = SQLScript.SQLScript.SourceAttr(source_id=source_id,disable_flg=disable_flg)
+    source_attr_qr = SQLScript.SQLScript.ObjectAttr(object_type="source",object_id=source_id,disable_flg=disable_flg)
 
     Metadata.Metadata.crsr.execute(source_qr)
     sources = Metadata.Metadata.crsr.fetchall()
@@ -134,19 +134,13 @@ class SourceConnection:
          return '{"result": [{"creation_flg":"0","creation_status":"Creation failed"}], "error":[{"error_flg":"1","error_code":"000004","error_text":"Source name already exists"}]}'
 
      #запись в метаданные
-     max_source_id_qr = SQLScript.SQLScript.MaxSourceId()
+     max_source_id_qr = SQLScript.SQLScript.MaxObjectId("source")
      Metadata.Metadata.crsr.execute(max_source_id_qr)
      source_id = str(Metadata.Metadata.crsr.fetchall()[0][0]+1)
-     source_attr = '{"server_name":"'+server_name + '",' \
-                   ' "database":"'+database + '",' \
-                   ' "user":"'+user + '",' \
-                   ' "password":"'+password + '",' \
-                   ' "port_number":"'+port_number + '",' \
-                   ' "source_name":"'+source_name + '",' \
-                   ' "source_type":"'+source_type + '"}' \
+     source_attr = {"server_name":server_name,"database":database,"user":user,"password":password,"port_number":port_number,"source_name":source_name,"source_type":source_type}
 
-     insert_source_qr = SQLScript.SQLScript.InsertSource(source_id)
-     insert_sourceprm_qr = SQLScript.SQLScript.InsertSourceAttr(source_id, source_attr)
+     insert_source_qr = SQLScript.SQLScript.InsertObject("source",source_id)
+     insert_sourceprm_qr = SQLScript.SQLScript.InsertObjectAttr("source",source_id, source_attr)
      create_qr = insert_source_qr + insert_sourceprm_qr
 
      #выполнение запроса
@@ -173,15 +167,9 @@ class SourceConnection:
          return """{"result":[{"alter flg":"0","alter status":"Alter failed"}], "error":[{"error_flg":"1","error_code":"000007","error_text":"Connection failed"}]}"""
 
      #изменение метаданных
-     del_qr = SQLScript.SQLScript.DeleteSourceAttr(source_id)
-     source_attr = '{"server_name":"'+server_name + '",' \
-                   ' "database":"'+database + '",' \
-                   ' "user":"'+user + '",' \
-                   ' "password":"'+password + '",' \
-                   ' "port_number":"'+port_number + '",' \
-                   ' "source_name":"'+source_name + '",' \
-                   ' "source_type":"'+source_type + '"}'
-     ins_qr = SQLScript.SQLScript.InsertSourceAttr(source_id, source_attr)
+     del_qr = SQLScript.SQLScript.DeleteObjectAttr("source",source_id)
+     source_attr = {"server_name":server_name,"database":database,"user":user,"password":password,"port_number":port_number,"source_name":source_name,"source_type":source_type}
+     ins_qr = SQLScript.SQLScript.InsertObjectAttr("source",source_id, source_attr)
      alter_qr = del_qr + ins_qr
 
      #выполнение запроса
@@ -200,7 +188,7 @@ class SourceConnection:
  def SourceDelete(source_id):
 
      result = ""
-     del_qr = SQLScript.SQLScript.DeleteSource(source_id)
+     del_qr = SQLScript.SQLScript.DeleteObject("source",source_id)
 
      #выполнение запроса
      try:
@@ -260,7 +248,7 @@ class SourceConnection:
  @staticmethod
  def SourceConnect(source_id):
 
-     source_attr_qr = SQLScript.SQLScript.SourceAttr(source_id)
+     source_attr_qr = SQLScript.SQLScript.ObjectAttr("source",source_id)
      Metadata.Metadata.crsr.execute(source_attr_qr)
      source_attr = Metadata.Metadata.crsr.fetchall()
 
