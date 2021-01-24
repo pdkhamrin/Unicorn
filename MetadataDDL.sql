@@ -93,3 +93,10 @@ values
 ('table_name','Наименование таблицы','table')
 ,('table_type','Тип таблицы','table')
 ,('schema','Схема таблицы','table');
+
+
+create table metadata.source_table
+(
+	table_id int not null, 
+	source_id int not null
+);
