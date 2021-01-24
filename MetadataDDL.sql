@@ -101,3 +101,9 @@ create table metadata.source_table
 	table_id int not null, 
 	source_id int not null
 );
+
+create table metadata.column
+(
+	column_id int not null, 
+	disable_flg int not null
+);
