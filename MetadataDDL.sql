@@ -73,3 +73,23 @@ INSERT INTO metadata.data_type_mapping (source_type,source_data_type,source_data
 ,('MSSQL','XML',NULL,'XML',NULL)
 ,('MSSQL','NVARCHAR',-1,'TEXT',NULL)
 ,('MSSQL','VARCHAR',-1,'TEXT',NULL);
+
+create table metadata.table 
+(
+	table_id int not null,
+	disable_flg int not null	
+);
+
+create table metadata.table_attr
+(
+	table_id int not null, 
+	attr_type varchar(100) not null, 
+	attr_value varchar(1000) not null
+);
+
+insert into metadata.attr_type
+(attr_type, attr_desc, object_nm)
+values 
+('table_name','Наименование таблицы','table')
+,('table_type','Тип таблицы','table')
+,('schema','Схема таблицы','table')
