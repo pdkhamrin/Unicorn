@@ -92,7 +92,8 @@ insert into metadata.attr_type
 values 
 ('table_name','Наименование таблицы','table')
 ,('table_type','Тип таблицы','table')
-,('schema','Схема таблицы','table');
+,('schema','Схема таблицы','table')
+,('source_table_name','Наименование таблицы на источнике','table');
 
 
 create table metadata.source_table
