@@ -114,3 +114,13 @@ create table metadata.column_attr
 	attr_type varchar(100) not null, 
 	attr_value varchar(1000) not null
 )
+
+insert into metadata.attr_type
+(attr_type, attr_desc, object_nm)
+values 
+('column_name','Наименование атрибута','column')
+,('column_type','Тип атрибута','column')
+,('datatype','Тип данных','column')
+,('length','Длина атрибута','column')
+,('scale','Количество знаков после запятой','column')
+,('source_column_name','Наименование атрибута на источнике','column')
