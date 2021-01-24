@@ -107,3 +107,10 @@ create table metadata.column
 	column_id int not null, 
 	disable_flg int not null
 );
+
+create table metadata.column_attr
+(
+	column_id int not null, 
+	attr_type varchar(100) not null, 
+	attr_value varchar(1000) not null
+)
