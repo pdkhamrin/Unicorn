@@ -36,4 +36,3 @@ class Support:
         result = {"datatype":datatype,"length":length}
         return result
 
-# print(Support.DataTypeMapping("smalldatetime",None)["length"])
