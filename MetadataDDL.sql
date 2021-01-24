@@ -124,3 +124,9 @@ values
 ,('length','Длина атрибута','column')
 ,('scale','Количество знаков после запятой','column')
 ,('source_column_name','Наименование атрибута на источнике','column')
+
+create table metadata.table_column 
+(
+	table_id int not null, 
+	column_id int not null
+)
