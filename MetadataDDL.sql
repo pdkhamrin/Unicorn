@@ -99,7 +99,8 @@ values
 create table metadata.source_table
 (
 	table_id int not null, 
-	source_id int not null
+	source_id int not null,
+	disable_flg int not null
 );
 
 create table metadata.column
@@ -128,5 +129,6 @@ values
 create table metadata.table_column 
 (
 	table_id int not null, 
-	column_id int not null
+	column_id int not null,
+	disable_flg int not null
 )
